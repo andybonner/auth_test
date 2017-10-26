@@ -6,6 +6,8 @@ logger = require('morgan'),
 mongoose = require('mongoose'),
 config = require('./config/main');
 
+const router = require('./router');
+
 // Database Connection
 mongoose.connect(config.database, {
   useMongoClient: true
@@ -29,3 +31,5 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
+
+router(app);
