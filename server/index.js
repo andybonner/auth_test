@@ -7,9 +7,9 @@ mongoose = require('mongoose'),
 config = require('./config/main');
 
 // Database Connection
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/auth_test"
-);  
+mongoose.connect(config.database, {
+  useMongoClient: true
+});  
 
 // Start the server
 const server = app.listen(config.port);  
@@ -17,6 +17,9 @@ console.log('Your server is running on port ' + config.port + '.');
 
 // Setting up basic middleware for all Express requests
 app.use(logger('dev')); // Log requests to API using morgan
+
+app.use(bodyParser.urlencoded({ extended: false }));  
+app.use(bodyParser.json());  
 
 // Enable CORS from client-side
 app.use(function(req, res, next) {  
